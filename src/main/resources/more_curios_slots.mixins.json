@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.letruxux.more_curios_slots.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "more-curios-slots.refmap.json",
+  "mixins": [
+    "CrystalHeartItemAttributeModifierMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
