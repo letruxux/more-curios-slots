@@ -61,7 +61,7 @@ public class ExtraSlotItem extends Item {
                         .withStyle(ChatFormatting.GRAY)
         );
 
-        if (level != null && level.isClientSide()) {
+        /*if (level != null && level.isClientSide()) {
             boolean slotExists = isSlotInCurios();
             if (!slotExists) {
                 components.add(
@@ -69,7 +69,7 @@ public class ExtraSlotItem extends Item {
                                 .withStyle(ChatFormatting.RED)
                 );
             }
-        }
+        }*/
 
         super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
@@ -79,7 +79,7 @@ public class ExtraSlotItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (!isSlotInCurios()) {
+        /*if (!isSlotInCurios()) {
             if (!level.isClientSide) {
                 player.displayClientMessage(Component.literal(String.format("There is no mod in this modpack that supports the %s slot. You can't unlock this.", this.SlotNameString)).withStyle(ChatFormatting.RED), true);
             } else {
@@ -87,7 +87,7 @@ public class ExtraSlotItem extends Item {
             }
 
             return super.use(level, player, hand);
-        }
+        }*/
 
         if (!level.isClientSide) {
             player.displayClientMessage(Component.literal(String.format("You just unlocked +1 %s slot!", this.SlotNameString)), true);
