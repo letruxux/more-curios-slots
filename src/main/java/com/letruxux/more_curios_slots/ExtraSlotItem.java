@@ -2,6 +2,7 @@ package com.letruxux.more_curios_slots;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -30,19 +31,15 @@ public class ExtraSlotItem extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack itemStack,
-                                @Nullable Level level,
-                                @NotNull List<Component> components,
-                                @NotNull TooltipFlag tooltipFlag) {
-        components.add(
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(
                 Component.literal("Adds +1 %s slot to your player. Permanent!"
                                 .formatted(this.SlotNameString))
                         .withStyle(ChatFormatting.GRAY)
         );
 
-        super.appendHoverText(itemStack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
-
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
@@ -59,7 +56,7 @@ public class ExtraSlotItem extends Item {
                 level.playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.EXPERIENCE_ORB_PICKUP, player.getSoundSource(), 1.0F, 1.0F);
                 itemStack.shrink(1);
-                curiosInventory.ifPresent(inventory -> inventory.addPermanentSlotModifier(this.SlotNameString, UUID.randomUUID(), String.format("Extra %s Slot", Utils.toTitleCase(this.SlotNameString)), 1, AttributeModifier.Operation.ADDITION));
+                curiosInventory.ifPresent(inventory -> inventory.addPermanentSlotModifier(this.SlotNameString, ResourceLocation.fromNamespaceAndPath("more_curios_slots",UUID.randomUUID().toString()), 1, AttributeModifier.Operation.ADD_VALUE));
             } else {
                 player.displayClientMessage(Component.literal("Curios inventory not found, are you sure you have any curios-supported mods?"), true);
                 level.playSound(null, player.getX(), player.getY(), player.getZ(),
