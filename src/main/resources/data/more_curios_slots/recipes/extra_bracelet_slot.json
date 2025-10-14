@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "NEN",
+        "DSD",
+        "NGN"
+    ],
+    "key": {
+        "N": {
+            "item": "minecraft:iron_block"
+        },
+        "D": {
+            "item": "minecraft:diamond_block"
+        },
+        "E": {
+            "item": "minecraft:emerald_block"
+        },
+        "G": {
+            "item": "minecraft:gold_block"
+        },
+        "S": {
+            "tag": "curios:bracelet"
+        }
+    },
+    "result": {
+        "item": "more_curios_slots:extra_bracelet_slot"
+    }
+}

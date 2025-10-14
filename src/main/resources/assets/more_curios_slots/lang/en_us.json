@@ -1,13 +1,13 @@
 {
-  "itemGroup.more_curios_slots": "Example Mod Tab",
-  "block.more_curios_slots.example_block": "Example Block",
-  "item.more_curios_slots.example_item": "Example Item",
-
-  "more_curios_slots.configuration.title": "More Curios Slots Configs",
-  "more_curios_slots.configuration.section.more_curios_slots.common.toml": "More Curios Slots Configs",
-  "more_curios_slots.configuration.section.more_curios_slots.common.toml.title": "More Curios Slots Configs",
-  "more_curios_slots.configuration.items": "Item List",
-  "more_curios_slots.configuration.logDirtBlock": "Log Dirt Block",
-  "more_curios_slots.configuration.magicNumberIntroduction": "Magic Number Text",
-  "more_curios_slots.configuration.magicNumber": "Magic Number"
+  "item.more_curios_slots.extra_belt_slot": "Extra Belt Slot",
+  "item.more_curios_slots.extra_head_slot": "Extra Head Slot",
+  "item.more_curios_slots.extra_feet_slot": "Extra Feet Slot",
+  "item.more_curios_slots.extra_hands_slot": "Extra Hands Slot",
+  "item.more_curios_slots.extra_charm_slot": "Extra Charm Slot",
+  "item.more_curios_slots.extra_ring_slot": "Extra Ring Slot",
+  "item.more_curios_slots.extra_back_slot": "Extra Back Slot",
+  "item.more_curios_slots.extra_bracelet_slot": "Extra Bracelet Slot",
+  "item.more_curios_slots.extra_necklace_slot": "Extra Necklace Slot",
+  "item.more_curios_slots.extra_body_slot": "Extra Body Slot",
+  "item.more_curios_slots.extra_curio_slot": "Extra Curio Slot"
 }
