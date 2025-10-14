@@ -46,21 +46,26 @@ public class ExtraSlotItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
 
         if (!level.isClientSide) {
-            player.displayClientMessage(Component.literal(String.format("You just unlocked +1 %s slot!", this.SlotNameString)), true);
-            player.addEffect(new MobEffectInstance(MobEffects.REGENERATION,
-                    20, 1));
-        } else {
-            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+            ItemStack itemStack = player.getItemInHand(hand);
+
+            var curiosInventory = CuriosApi.getCuriosInventory(player);
+
+            if (curiosInventory.isPresent()) {
+                player.displayClientMessage(Component.literal(String.format("You just unlocked +1 %s slot!", this.SlotNameString)), true);
+                player.addEffect(new MobEffectInstance(MobEffects.REGENERATION,
+                        20, 1));
+                level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.EXPERIENCE_ORB_PICKUP, player.getSoundSource(), 1.0F, 1.0F);
+                itemStack.shrink(1);
+                curiosInventory.ifPresent(inventory -> inventory.addPermanentSlotModifier(this.SlotNameString, UUID.randomUUID(), String.format("Extra %s Slot", Utils.toTitleCase(this.SlotNameString)), 1, AttributeModifier.Operation.ADDITION));
+            } else {
+                player.displayClientMessage(Component.literal("Curios inventory not found, are you sure you have any curios-supported mods?"), true);
+                level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.PILLAGER_AMBIENT, player.getSoundSource(), 1.0F, 1.0F);
+            }
         }
-
-        itemStack.shrink(1);
-
-        CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
-            inventory.addPermanentSlotModifier(this.SlotNameString, UUID.randomUUID(), String.format("Extra %s Slot", Utils.toTitleCase(this.SlotNameString)), 1, AttributeModifier.Operation.ADDITION);
-        });
 
         return super.use(level, player, hand);
     }
