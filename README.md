@@ -18,10 +18,11 @@ You can edit the crafting recipes with KubeJS or datapacks. Curios uses tags lik
 ![Sample use](https://files.catbox.moe/igbnrp.webp)
 
 ## Troubleshooting
-> "This slot is not available in your modpack! It will be useless."
-
-\> This means you don't have any mod that uses curios. Read the first part of this page.
 
 > When using artifacts, effects don't stack.
 
 \> This is just how artifacts is programmed, pretty sad. It theoretically would be possible to change this behavior via mixins, but i'm not experienced enough yet.
+
+> I can't equip multiple spellstones with Enigmatic Legacy
+
+\> Make sure `B:SpellstonesMultiequip` is set to true in Enigmatic Legacy's Settings
