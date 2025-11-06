@@ -34,8 +34,9 @@ public class MoreCuriosSlots {
             "back",
             "bracelet",
             "necklace",
-            "body"
-            // "calendar",
+            "body",
+            "spellstone"
+            /*we dont even have to worry of missing mods because it just unloads the recipes ❤️❤️❤️❤️*/
     );
 
     public static final List<RegistryObject<ExtraSlotItem>> EXTRA_SLOT_ITEMS =
@@ -47,18 +48,18 @@ public class MoreCuriosSlots {
                     .toList();
 
 
-    public static final RegistryObject<CreativeModeTab> MORE_CURIOS_SLOTS_TAB = CREATIVE_MODE_TABS.register("more_curios_slots_tab", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.literal("More Curios Slots"))
-            .icon(() -> EXTRA_SLOT_ITEMS.get(0).get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                for (RegistryObject<ExtraSlotItem> extraSlotItem : EXTRA_SLOT_ITEMS) {
-                    output.accept(extraSlotItem.get());
-                }
-            }).build());
-
     public MoreCuriosSlots(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
+
+        CREATIVE_MODE_TABS.register("more_curios_slots_tab", () -> CreativeModeTab.builder()
+                .withTabsBefore(CreativeModeTabs.COMBAT)
+                .title(Component.literal("More Curios Slots"))
+                .icon(() -> EXTRA_SLOT_ITEMS.get(0).get().getDefaultInstance())
+                .displayItems((parameters, output) -> {
+                    for (RegistryObject<ExtraSlotItem> extraSlotItem : EXTRA_SLOT_ITEMS) {
+                        output.accept(extraSlotItem.get());
+                    }
+                }).build());
 
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

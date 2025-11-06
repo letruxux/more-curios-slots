@@ -52,7 +52,7 @@ public class ExtraSlotItem extends Item {
 
             var curiosInventory = CuriosApi.getCuriosInventory(player);
 
-            if (curiosInventory.isPresent()) {
+            if (curiosInventory.isPresent() && CuriosApi.getSlots(level).containsKey(this.SlotNameString)) {
                 player.displayClientMessage(Component.literal(String.format("You just unlocked +1 %s slot!", this.SlotNameString)), true);
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION,
                         20, 1));

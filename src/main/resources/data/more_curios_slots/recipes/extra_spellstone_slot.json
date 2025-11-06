@@ -19,10 +19,19 @@
             "item": "minecraft:gold_block"
         },
         "S": {
-            "tag": "curios:calendar"
+            "tag": "curios:spellstone"
         }
     },
     "result": {
-        "item": "more_curios_slots:extra_calendar_slot"
-    }
+        "item": "more_curios_slots:extra_spellstone_slot"
+    },
+    "conditions": [
+        {
+            "type": "forge:not",
+            "value": {
+                "type": "forge:tag_empty",
+                "tag": "curios:spellstone"
+            }
+        }
+    ]
 }
