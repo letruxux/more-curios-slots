@@ -1,8 +1,9 @@
 import json, os
 
+# ababbaba
 curio_slots = [
     "head", "feet", "hands", "charm", "belt", "ring",
-    "back", "bracelet", "necklace", "body", "curio" #"calendar"
+    "back", "bracelet", "necklace", "body", "curio", "spellstone"
 ]
 
 dest_recipe_path = "./src/main/resources/data/more_curios_slots/recipes"
@@ -23,7 +24,16 @@ def create_recipe_json(slot):
             "G": {"item": "minecraft:gold_block"},
             "S": {"tag": f"curios:{slot}"}
         },
-        "result": {"item": f"more_curios_slots:extra_{slot}_slot"}
+        "result": {"item": f"more_curios_slots:extra_{slot}_slot"},
+        "conditions": [
+            {
+                "type": "forge:not",
+                "value": {
+                    "type": "forge:tag_empty",
+                    "tag": f"curios:{slot}"
+                }
+            }
+        ]
     }
 
 def create_model_json(slot):

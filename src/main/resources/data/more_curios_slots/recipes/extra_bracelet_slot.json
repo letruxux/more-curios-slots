@@ -24,5 +24,14 @@
     },
     "result": {
         "item": "more_curios_slots:extra_bracelet_slot"
-    }
+    },
+    "conditions": [
+        {
+            "type": "forge:not",
+            "value": {
+                "type": "forge:tag_empty",
+                "tag": "curios:bracelet"
+            }
+        }
+    ]
 }
