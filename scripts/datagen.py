@@ -1,5 +1,6 @@
 import json, os
 
+# ababbaba
 curio_slots = [
     "head", "feet", "hands", "charm", "belt", "ring",
     "back", "bracelet", "necklace", "body", "curio", "spellstone"
