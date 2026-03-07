@@ -4,9 +4,7 @@
   "package": "com.letruxux.more_curios_slots.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "more-curios-slots.refmap.json",
-  "mixins": [
-    "CrystalHeartItemAttributeModifierMixin"
-  ],
+  "mixins": [],
   "client": [
   ],
   "injectors": {

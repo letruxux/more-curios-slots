@@ -1,9 +1,7 @@
 package com.letruxux.more_curios_slots;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -21,8 +19,6 @@ public class MoreCuriosSlots {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
-
     public static final List<String> ALL_CURIO_NAMES = List.of(
             "curio",
             "head",
@@ -36,7 +32,6 @@ public class MoreCuriosSlots {
             "necklace",
             "body",
             "spellstone"
-            /*we dont even have to worry of missing mods because it just unloads the recipes ❤️❤️❤️❤️*/
     );
 
     public static final List<RegistryObject<ExtraSlotItem>> EXTRA_SLOT_ITEMS =
@@ -47,21 +42,20 @@ public class MoreCuriosSlots {
                     ))
                     .toList();
 
+    public static CreativeModeTab TAB;
 
     public MoreCuriosSlots(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
-        CREATIVE_MODE_TABS.register("more_curios_slots_tab", () -> CreativeModeTab.builder()
-                .withTabsBefore(CreativeModeTabs.COMBAT)
+        /*TAB = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.literal("More Curios Slots"))
                 .icon(() -> EXTRA_SLOT_ITEMS.get(0).get().getDefaultInstance())
                 .displayItems((parameters, output) -> {
                     for (RegistryObject<ExtraSlotItem> extraSlotItem : EXTRA_SLOT_ITEMS) {
                         output.accept(extraSlotItem.get());
                     }
-                }).build());
+                }).build();*/
 
         ITEMS.register(modEventBus);
-        CREATIVE_MODE_TABS.register(modEventBus);
     }
 }
