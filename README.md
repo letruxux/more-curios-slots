@@ -10,12 +10,12 @@
 
 This mod allows you to craft more slots to use with Curios. They are pricey, but worth it.
 
-![Charm Crafting](https://files.catbox.moe/lc1t17.webp)
+![Charm Crafting](https://cdn.modrinth.com/data/v4mOUzHT/images/e6cc2e553e2a7250926b2026e2fea775ffed2006.webp)
 
 You can edit the crafting recipes with KubeJS or datapacks. Curios uses tags like `#curios:charm`, `#curios:head` etc. to refer to items that fit in a specific slot. 
 
 > Example with more slots.
-![Sample use](https://files.catbox.moe/igbnrp.webp)
+![Sample use](https://cdn.modrinth.com/data/v4mOUzHT/images/9d2c646ac22cf9050dbae10fa574e54a9a2267b6.webp)
 
 ## Troubleshooting
 
