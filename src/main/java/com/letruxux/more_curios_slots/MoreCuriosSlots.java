@@ -1,5 +1,6 @@
 package com.letruxux.more_curios_slots;
 
+import com.letruxux.more_curios_slots.datagen.ModRecipeProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -8,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -56,5 +58,13 @@ public class MoreCuriosSlots {
   public MoreCuriosSlots(IEventBus modEventBus, ModContainer modContainer) {
     ITEMS.register(modEventBus);
     CREATIVE_MODE_TABS.register(modEventBus);
+    modEventBus.addListener(this::onGatherData);
+  }
+
+  private void onGatherData(GatherDataEvent event) {
+    event.getGenerator().addProvider(
+        event.includeServer(),
+        new ModRecipeProvider(event.getGenerator().getPackOutput(), event.getLookupProvider())
+    );
   }
 }

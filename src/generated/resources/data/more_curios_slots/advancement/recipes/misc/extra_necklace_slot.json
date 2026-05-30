@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "curios"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_necklace": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#curios:necklace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "more_curios_slots:extra_necklace_slot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_necklace"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "more_curios_slots:extra_necklace_slot"
+    ]
+  }
+}
