@@ -24,3 +24,5 @@ runs
 run-data
 
 repo
+# datagen cache
+src/generated/resources/.cache

@@ -18,4 +18,8 @@ public class Utils {
 
         return titleCase.toString();
     }
+
+    public static String toDisplayName(String identifier) {
+        return toTitleCase(identifier.replace('_', ' ').replace('-', ' '));
+    }
 }

@@ -22,6 +22,11 @@ public class MoreCuriosSlots {
   public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
+  public static final DeferredItem<ExtraSlotItem> GENERIC_EXTRA_SLOT_ITEM = ITEMS.registerItem(
+      "extra_slot",
+      (properties) -> new ExtraSlotItem(properties, null),
+      new Item.Properties());
+
   public static final List<String> ALL_CURIO_NAMES = List.of(
       "curio",
       "head",
@@ -53,11 +58,13 @@ public class MoreCuriosSlots {
             for (DeferredItem<ExtraSlotItem> extraSlotItem : EXTRA_SLOT_ITEMS) {
               output.accept(extraSlotItem.get());
             }
+            output.accept(GENERIC_EXTRA_SLOT_ITEM.get());
           }).build());
 
   public MoreCuriosSlots(IEventBus modEventBus, ModContainer modContainer) {
     ITEMS.register(modEventBus);
     CREATIVE_MODE_TABS.register(modEventBus);
+    ModComponents.DATA_COMPONENTS.register(modEventBus);
     modEventBus.addListener(this::onGatherData);
   }
 
