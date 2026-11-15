@@ -22,6 +22,8 @@ Datapacks can add new recipes for new slots, make a new recipe for any slot at `
 
 ### Sample recipe:
 
+<details><summary>Show recipe json</summary>
+
 ```json
 {
   "type": "minecraft:crafting_shaped",
@@ -42,10 +44,13 @@ Datapacks can add new recipes for new slots, make a new recipe for any slot at `
 }
 ```
 
+</details>
+
 ### Notes:
 
 - Find slot ids with `/curios list`.
 - You can't currently remove the pre-installed curios slots.
+- You can use `/give @s more_curios_slots:extra_slot[more_curios_slots:slot=<new_slot>]` to give yourself any extra slot.
 
 ## Troubleshooting
 
