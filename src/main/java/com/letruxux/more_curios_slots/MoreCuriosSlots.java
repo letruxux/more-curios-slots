@@ -34,6 +34,9 @@ public class MoreCuriosSlots {
             "spellstone"
     );
 
+    public static final RegistryObject<ExtraSlotItem> GENERIC_EXTRA_SLOT_ITEM =
+            ITEMS.register("extra_slot", () -> new ExtraSlotItem(new Item.Properties(), null));
+
     public static final List<RegistryObject<ExtraSlotItem>> EXTRA_SLOT_ITEMS =
             ALL_CURIO_NAMES.stream()
                     .map(slot -> ITEMS.register(
