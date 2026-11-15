@@ -10,5 +10,14 @@
   "item.more_curios_slots.extra_necklace_slot": "Extra Necklace Slot",
   "item.more_curios_slots.extra_body_slot": "Extra Body Slot",
   "item.more_curios_slots.extra_spellstone_slot": "Extra Spellstone Slot",
-  "item.more_curios_slots.extra_curio_slot": "Extra Curio Slot"
+  "item.more_curios_slots.extra_curio_slot": "Extra Curio Slot",
+  "item.more_curios_slots.extra_slot": "Extra Curio Slot",
+  "item.more_curios_slots.extra_slot.named": "Extra %s Slot",
+  "tooltip.more_curios_slots.adds_slot": "Adds +1 %s slot to your player. Permanent!",
+  "tooltip.more_curios_slots.no_slot": "No slot configured!",
+  "tooltip.more_curios_slots.no_slot.hint": "A slot hasn't been set.",
+  "message.more_curios_slots.unlocked": "You just unlocked +1 %s slot!",
+  "message.more_curios_slots.slot_unavailable": "The %s slot is not available in this modpack!",
+  "message.more_curios_slots.no_curios": "Curios inventory not found, are you sure you have any curios-supported mods?",
+  "message.more_curios_slots.no_slot": "This item has no slot configured."
 }

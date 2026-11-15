@@ -39,6 +39,9 @@ public class MoreCuriosSlots {
             /*we dont even have to worry of missing mods because it just unloads the recipes ❤️❤️❤️❤️*/
     );
 
+    public static final RegistryObject<ExtraSlotItem> GENERIC_EXTRA_SLOT_ITEM =
+            ITEMS.register("extra_slot", () -> new ExtraSlotItem(new Item.Properties(), null));
+
     public static final List<RegistryObject<ExtraSlotItem>> EXTRA_SLOT_ITEMS =
             ALL_CURIO_NAMES.stream()
                     .map(slot -> ITEMS.register(
@@ -59,6 +62,7 @@ public class MoreCuriosSlots {
                     for (RegistryObject<ExtraSlotItem> extraSlotItem : EXTRA_SLOT_ITEMS) {
                         output.accept(extraSlotItem.get());
                     }
+                    output.accept(GENERIC_EXTRA_SLOT_ITEM.get());
                 }).build());
 
         ITEMS.register(modEventBus);

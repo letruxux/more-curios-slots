@@ -1,7 +1,10 @@
 package com.letruxux.more_curios_slots;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,16 +20,52 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.List;
 import java.util.UUID;
 
 public class ExtraSlotItem extends Item {
-    private final String SlotNameString;
+    public static final String SLOT_TAG = "Slot";
 
-    public ExtraSlotItem(Properties properties, String slot) {
+    private final @Nullable String defaultSlot;
+
+    public ExtraSlotItem(Properties properties, @Nullable String defaultSlot) {
         super(properties.rarity(Rarity.RARE));
-        this.SlotNameString = slot;
+        this.defaultSlot = defaultSlot;
+    }
+
+    public static @Nullable String getStoredSlot(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+
+        if (tag == null || !tag.contains(SLOT_TAG, Tag.TAG_STRING)) {
+            return null;
+        }
+
+        String slot = tag.getString(SLOT_TAG);
+        return slot.isBlank() ? null : slot;
+    }
+
+    public @Nullable String getSlot(ItemStack stack) {
+        String configured = getStoredSlot(stack);
+        return configured != null ? configured : this.defaultSlot;
+    }
+
+    @Override
+    public @NotNull Component getName(@NotNull ItemStack stack) {
+        String configured = getStoredSlot(stack);
+
+        if (configured != null) {
+            return Component.translatable("item.more_curios_slots.extra_slot.named",
+                    Utils.toDisplayName(configured));
+        }
+
+        return super.getName(stack);
+    }
+
+    private static void playFailSound(Level level, Player player) {
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.PILLAGER_AMBIENT, player.getSoundSource(), 1.0F, 1.0F);
     }
 
     @Override
@@ -34,39 +73,59 @@ public class ExtraSlotItem extends Item {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        components.add(
-                Component.literal("Adds +1 %s slot to your player. Permanent!"
-                                .formatted(this.SlotNameString))
-                        .withStyle(ChatFormatting.GRAY)
-        );
+        String slot = this.getSlot(itemStack);
+
+        if (slot == null) {
+            components.add(Component.translatable("tooltip.more_curios_slots.no_slot")
+                    .withStyle(ChatFormatting.RED));
+            components.add(Component.translatable("tooltip.more_curios_slots.no_slot.hint")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        } else {
+            components.add(Component.translatable("tooltip.more_curios_slots.adds_slot", slot)
+                    .withStyle(ChatFormatting.GRAY));
+        }
 
         super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
 
-
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
 
-        if (!level.isClientSide) {
-            ItemStack itemStack = player.getItemInHand(hand);
-
-            var curiosInventory = CuriosApi.getCuriosInventory(player);
-
-            if (curiosInventory.isPresent() && CuriosApi.getSlots(level).containsKey(this.SlotNameString)) {
-                player.displayClientMessage(Component.literal(String.format("You just unlocked +1 %s slot!", this.SlotNameString)), true);
-                player.addEffect(new MobEffectInstance(MobEffects.REGENERATION,
-                        20, 1));
-                level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.EXPERIENCE_ORB_PICKUP, player.getSoundSource(), 1.0F, 1.0F);
-                itemStack.shrink(1);
-                curiosInventory.ifPresent(inventory -> inventory.addPermanentSlotModifier(this.SlotNameString, UUID.randomUUID(), String.format("Extra %s Slot", Utils.toTitleCase(this.SlotNameString)), 1, AttributeModifier.Operation.ADDITION));
-            } else {
-                player.displayClientMessage(Component.literal("Curios inventory not found, are you sure you have any curios-supported mods?"), true);
-                level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.PILLAGER_AMBIENT, player.getSoundSource(), 1.0F, 1.0F);
-            }
+        if (level.isClientSide) {
+            return InteractionResultHolder.pass(itemStack);
         }
 
-        return super.use(level, player, hand);
+        String slot = this.getSlot(itemStack);
+
+        if (slot == null) {
+            player.displayClientMessage(Component.translatable("message.more_curios_slots.no_slot"), true);
+            playFailSound(level, player);
+            return InteractionResultHolder.fail(itemStack);
+        }
+
+        ICuriosItemHandler inventory = CuriosApi.getCuriosInventory(player).orElse(null);
+
+        if (inventory == null) {
+            player.displayClientMessage(Component.translatable("message.more_curios_slots.no_curios"), true);
+            playFailSound(level, player);
+            return InteractionResultHolder.fail(itemStack);
+        }
+
+        if (!inventory.getCurios().containsKey(slot)) {
+            player.displayClientMessage(Component.translatable("message.more_curios_slots.slot_unavailable", slot), true);
+            playFailSound(level, player);
+            return InteractionResultHolder.fail(itemStack);
+        }
+
+        player.displayClientMessage(Component.translatable("message.more_curios_slots.unlocked", slot), true);
+        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, 1));
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.EXPERIENCE_ORB_PICKUP, player.getSoundSource(), 1.0F, 1.0F);
+        itemStack.shrink(1);
+        inventory.addPermanentSlotModifier(slot, UUID.randomUUID(), Utils.toDisplayName(slot),
+                1, AttributeModifier.Operation.ADDITION);
+
+        return InteractionResultHolder.success(itemStack);
     }
 }

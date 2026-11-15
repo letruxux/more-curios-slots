@@ -17,6 +17,38 @@ You can edit the crafting recipes with KubeJS or datapacks. Curios uses tags lik
 > Example with more slots.
 ![Sample use](https://cdn.modrinth.com/data/v4mOUzHT/images/9d2c646ac22cf9050dbae10fa574e54a9a2267b6.webp)
 
+## Adding extra slots for slots from other mods
+
+Datapacks can add new recipes for new slots, make a new recipe for any slot at `data/<your_pack>/recipe/extra_<new_slot>_slot.json`
+
+### Sample recipe:
+
+```json
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NEN", "DSD", "NGN"],
+  "key": {
+    "N": { "item": "minecraft:iron_block" },
+    "E": { "item": "minecraft:emerald_block" },
+    "D": { "item": "minecraft:diamond_block" },
+    "G": { "item": "minecraft:gold_block" },
+    "S": { "tag": "curios:<new_slot>" }
+  },
+  "result": {
+    "item": "more_curios_slots:extra_slot",
+    "count": 1,
+    "nbt": "{Slot:\"<new_slot>\"}"
+  }
+}
+```
+
+### Notes:
+
+- Find slot ids with `/curios list`, or by looking for the slot list inside the jar of the mod that adds them.
+- On this version the targeted slot is stored in the item's NBT (`Slot`), since data components only exist in 1.20.5+.
+- You can't currently remove the pre-installed curios slots.
+
 ## Troubleshooting
 
 > When using artifacts, effects don't stack.
